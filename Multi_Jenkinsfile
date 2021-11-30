@@ -23,10 +23,7 @@ pipeline {
         }
 
         stage("CREATE ARTIFACT") {
-            when {
-                branch 'dev';
-            }
-              steps{
+            steps{
                 sh "mvn clean package"
                 sh "docker build . -t ayeliferov/epam_lab:Clinic_${env.BUILD_TAG} "
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
