@@ -148,13 +148,13 @@ resource "aws_security_group" "app-clinic_task" {
   }
 }
 
-resource "aws_ecs_cluster" "main" {
-  name = "example-cluster"
+resource "aws_ecs_cluster" "dev" {
+  name = "dev-cluster"
 }
 
 resource "aws_ecs_service" "app-clinic" {
   name            = "clinic-service"
-  cluster         = aws_ecs_cluster.main.id
+  cluster         = aws_ecs_cluster.dev.id
   task_definition = aws_ecs_task_definition.app-clinic.arn
   desired_count   = var.app_count
   launch_type     = "FARGATE"
