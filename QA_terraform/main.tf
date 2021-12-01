@@ -3,7 +3,7 @@ data "aws_availability_zones" "available_zones" {
 }
 
 resource "aws_vpc" "default" {
-  cidr_block = "10.32.0.0/16"
+  cidr_block = "10.31.0.0/16"
 }
 
 resource "aws_subnet" "public" {
@@ -60,7 +60,7 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_security_group" "lb" {
-  name        = "example-alb-security-group"
+  name        = "qa-alb-security-group"
   vpc_id      = aws_vpc.default.id
 
   ingress {
@@ -79,13 +79,13 @@ resource "aws_security_group" "lb" {
 }
 
 resource "aws_lb" "default" {
-  name            = "example-lb"
+  name            = "qa-lb"
   subnets         = aws_subnet.public.*.id
   security_groups = [aws_security_group.lb.id]
 }
 
 resource "aws_lb_target_group" "app-clinic" {
-  name        = "example-target-group"
+  name        = "qa-target-group"
   port        = 8080
   protocol    = "HTTP"
   vpc_id      = aws_vpc.default.id
@@ -130,7 +130,7 @@ DEFINITION
 }
 
 resource "aws_security_group" "app-clinic_task" {
-  name        = "example-task-security-group"
+  name        = "qa-task-security-group"
   vpc_id      = aws_vpc.default.id
 
   ingress {
